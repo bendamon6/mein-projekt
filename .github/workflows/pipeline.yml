@@ -74,3 +74,14 @@ jobs:
             DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
             echo "Token-Länge: ${#DEPLOY_TOKEN}"
+
+    # Pipeline wird Release erstellen mit unique version ID
+    # das Zip-Artifact wird als Release-Asset angehängt
+    # Permissions für Write schon weiter oben unter deploy erstellt
+      - name: Release erstellen
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: "Release v1.0.${{ github.run_number }}"
+          body: "Automatisches Release aus CI/CD Pipeline"
+          files: build/app.zip
