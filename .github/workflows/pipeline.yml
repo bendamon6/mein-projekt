@@ -51,7 +51,16 @@ jobs:
   # Hinzufügen von Deploy-Job -> Artifact soll im zweiten Job genutzt werden
   deploy:
     needs: test
+    # Deployment läuft nicht bei Pull Requests
+    if: github.ref == 'refs/heads/main'
+    # GitHub verlangt meine Freigabe
+    environment: production
     runs-on: ubuntu-latest
+
+    # Minimal aber gerade noch ausreichend
+    permissions:
+        contents: write
+        actions: read
 
     steps:
       - name: Paket herunterladen
@@ -60,3 +69,8 @@ jobs:
           name: app-paket
           path: build/
          
+      - name: Zugangsdaten prüfen
+        env:
+            DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+            echo "Token-Länge: ${#DEPLOY_TOKEN}"
