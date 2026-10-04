@@ -1,5 +1,5 @@
 name: CI/CD
-
+# Workflow nun vorhanden, startet bei push und pull_request
 on:
   push:
   pull_request:
@@ -13,12 +13,14 @@ jobs:
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v4
-        
+
+      # Einrichten der Py-Version und Dependencies und Tests
       - name: Python einrichten
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      
+
+      # GH speichert die downgeloadeten Py-Pakete, Cache wird wiederverwendet, wenn requirements.txt nicht geändert wurde
       - name: Pip-Cache
         uses: actions/cache@v4
         with:
@@ -32,3 +34,18 @@ jobs:
 
       - name: Tests ausführen
         run: python -m pytest -v
+
+        # Erzeuge build-Ordner, zippe src-Dateien in Artifact für nächsten Job
+      - name: Paket bauen
+        run: |
+          mkdir -p build
+          python -m zipfile -c build/app.zip src/
+
+        # Upload von Artifact
+      - name: Paket hochladen
+        uses: actions/upload-artifact@v4
+        with:
+            name: app-paket
+            path: build/
+
+            
