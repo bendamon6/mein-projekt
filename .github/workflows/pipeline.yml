@@ -48,4 +48,15 @@ jobs:
             name: app-paket
             path: build/
 
-            
+  # Hinzufügen von Deploy-Job -> Artifact soll im zweiten Job genutzt werden
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Paket herunterladen
+        uses: actions/download-artifact@v4
+        with:
+          name: app-paket
+          path: build/
+         
