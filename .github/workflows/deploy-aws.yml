@@ -27,3 +27,9 @@ jobs:
 
       - name: Bucket erreichbar?
         run: aws s3 ls "s3://${{ vars.S3_BUCKET }}"
+      - name: Upload prüfen (Trockenlauf)
+        run: aws s3 sync ./site "s3://${{ vars.S3_BUCKET }}" --delete --dryrun"
+
+      - name: Dateien nach S3 hochladen
+        run: aws s3 sync ./site "s3://${{ vars.S3_BUCKET }}"" --delete
+
