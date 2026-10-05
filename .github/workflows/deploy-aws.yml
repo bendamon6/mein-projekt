@@ -1,0 +1,29 @@
+name: Deploy nach AWS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bei AWS anmelden
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login prüfen
+        run: aws sts get-caller-identity
+
+      - name: Bucket erreichbar?
+        run: aws s3 ls "s3://${{ vars.S3_BUCKET }}"
