@@ -72,4 +72,4 @@ Für die Challenge wurden folgende Screenshots erstellt:
 Reflexion
 
 Im Verlauf des Projekts wurde eine vollständige CI/CD-Pipeline aufgebaut, die alle wesentlichen Elemente moderner Softwarebereitstellung umfasst. 
-Dazu gehören automatisierte Tests, Build-Prozesse, Artefaktverwaltung, der Einsatz von Secrets, geschützte Environments und automatisierte Releases. Besonders wertvoll war das Verständnis der Job-Abhängigkeiten, der Schutzmechanismen von GitHub Environments und der sicheren Handhabung von Secrets.
+Dazu gehören automatisierte Tests, Build-Prozesse, Artefaktverwaltung, der Einsatz von Secrets, geschützte Environments und automatisierte Releases. Besonders wertvoll war das Verständnis der Job-Abhängigkeiten, der Schutzmechanismen von GitHub Environments und der sicheren Handhabung von Secrets.   
